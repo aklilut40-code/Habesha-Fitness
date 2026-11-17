@@ -1,3 +1,4 @@
+// The App component is the root component of the application. It wraps the entire application in various context providers, including LangProvider for language support, ToastProvider for displaying toast notifications, AuthProvider for managing user authentication, and DataProvider for managing application data. It also renders the Router component, which handles routing and page rendering based on the current path and user authentication status, and the ChatGate component, which conditionally renders a chat assistant on public pages.
 import { useEffect } from 'react';
 import { LangProvider } from './i18n/LangContext';
 import ChatBot from './components/chat/ChatBot';
@@ -19,7 +20,7 @@ import Payments from './pages/Payments';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 import NotFound from './pages/NotFound';
-
+// The APP_PAGES object maps the route paths to their corresponding page components. This allows the Router component to dynamically render the appropriate page based on the current path.
 const APP_PAGES = {
   '/app/dashboard': Dashboard,
   '/app/members': Members,
@@ -31,7 +32,7 @@ const APP_PAGES = {
   '/app/reports': Reports,
   '/app/settings': Settings,
 };
-
+// The Router component is responsible for rendering the appropriate page based on the current route and user authentication status. It uses the useRoute hook to get the current path and the useAuth hook to get the user authentication status. It also uses the useEffect hook to perform side effects when the path or user changes, such as navigating to different pages or scrolling to the top of the page.
 function Router() {
   const { path } = useRoute();
   const { user } = useAuth();
