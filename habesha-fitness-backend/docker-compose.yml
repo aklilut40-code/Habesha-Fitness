@@ -1,0 +1,24 @@
+# Easiest way to get PostgreSQL on your computer (needs Docker Desktop).
+#   docker compose up -d      start the database in the background
+#   docker compose down       stop it (your data stays in the "pgdata" volume)
+#   docker compose down -v    stop it AND delete all its data
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: habesha_fitness
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d habesha_fitness"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
