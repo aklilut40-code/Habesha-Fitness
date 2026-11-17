@@ -65,7 +65,7 @@ function ChatGate() {
   const { path } = useRoute();
   return path.startsWith('/app') ? null : <ChatBot />;
 }
-
+// exporting the App component as the default export of this module. The App component serves as the root component of the application, wrapping the entire application in various context providers and rendering the Router and ChatGate components.
 export default function App() {
   return (
     <LangProvider>
