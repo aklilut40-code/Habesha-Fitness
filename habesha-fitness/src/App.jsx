@@ -44,7 +44,7 @@ function Router() {
     if ((path === '/login' || path === '/register') && user) navigate('/app/dashboard', true);
     if (!isApp) window.scrollTo(0, 0);
   }, [path, user, isApp]);
-
+// The Router component conditionally renders different pages based on the current path and user authentication status. It returns the appropriate page component for each route, or a NotFound component if the route does not match any defined paths.
   if (path === '/') return <Landing />;
   if (path === '/login') return user ? null : <Login />;
   if (path === '/register') return user ? null : <Register />;
