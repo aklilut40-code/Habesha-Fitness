@@ -10,7 +10,10 @@ import { useData } from '../store/DataContext';
 import { useAuth } from '../store/AuthContext';
 import { navigate } from '../store/router';
 import { isEmail, isPhone, passwordIssue } from '../utils/validators';
-
+// The Settings component is responsible for rendering the user profile and gym settings page.
+//  It allows users to update their profile information, change their password, manage gym settings, 
+// and configure notification preferences. The component uses various hooks to manage state, 
+// handle form submissions, and display toast notifications for feedback.
 export default function Settings() {
   const { settings, notifications, updateSettings, updateNotifications, resetDemo } = useData();
   const { user, updateProfile, changePassword, logout } = useAuth();
@@ -23,7 +26,9 @@ export default function Settings() {
   const [gym, setGym] = useState(settings);
   const [gErr, setGErr] = useState({});
   const [confirmReset, setConfirmReset] = useState(false);
-
+// The saveProfile function is an asynchronous function that handles the submission of the user profile form. 
+// It validates the input fields, updates the profile using the updateProfile function from the AuthContext, 
+// and displays success or error messages using toast notifications.
   const saveProfile = async (e) => {
     e.preventDefault();
     const er = {};
@@ -35,7 +40,10 @@ export default function Settings() {
     await updateProfile({ name: profile.name.trim(), phone: profile.phone.trim(), gender: profile.gender });
     toast.success('Profile updated.');
   };
-
+// The savePassword function is an asynchronous function that handles the submission of the change password form.
+// It validates the current password, new password, and confirmation password fields, 
+// updates the password using the changePassword function from the AuthContext, 
+// and displays success or error messages using toast notifications.
   const savePassword = async (e) => {
     e.preventDefault();
     const er = {};
