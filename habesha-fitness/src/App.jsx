@@ -36,7 +36,7 @@ function Router() {
   const { path } = useRoute();
   const { user } = useAuth();
   const isApp = path.startsWith('/app');
-
+// The useEffect hook is used to perform side effects in the Router component. It checks the current path and user authentication status, and navigates to the appropriate page based on these conditions. It also scrolls to the top of the page when navigating to a non-app route.
   useEffect(() => {
     if (isApp && !user) navigate('/login', true);
     if (path === '/app') navigate('/app/dashboard', true);
