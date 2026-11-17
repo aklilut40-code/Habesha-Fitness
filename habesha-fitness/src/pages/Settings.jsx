@@ -58,7 +58,10 @@ export default function Settings() {
     setPw({ current: '', next: '', confirm: '' });
     toast.success('Password changed (demo account only).');
   };
-
+// The saveGym function is responsible for handling the submission of the gym settings form.
+// It validates the input fields for gym name, email, phone, address, and opening hours, 
+// updates the gym settings using the updateSettings function from the DataContext, 
+// and displays success or error messages using toast notifications.
   const saveGym = (e) => {
     e.preventDefault();
     const er = {};
@@ -120,7 +123,7 @@ export default function Settings() {
             <div className="form-actions"><Button type="submit">Save settings</Button></div>
           </form>
         </Card>
-
+        {/* Notification preferences section */}
         <Card title="Notification preferences" subtitle="Preferences are saved; delivery is simulated">
           <div className="toggles">
             <Toggle checked={notifications.newMember} onChange={toggle('newMember', 'New member alerts')} label="New member alerts" description="When someone registers" />
