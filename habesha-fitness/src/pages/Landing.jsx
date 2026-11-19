@@ -10,6 +10,7 @@ import { IMAGES } from '../store/images';
 import { PROGRAMS } from '../store/programs';
 import { money } from '../utils/format';
 import { useLang } from '../i18n/LangContext';
+import { OWNER, SOCIAL } from '../config/contact';
 
 const STATS = [
   ['1,200+', 'stat1'],
@@ -186,6 +187,14 @@ export default function Landing() {
             <ul className="contact-list">
               <li><Icon name="phone" size={16} /> <a href={`tel:${settings.phone.replace(/\s/g, '')}`}>{settings.phone}</a></li>
               <li><Icon name="mail" size={16} /> <a href={`mailto:${settings.email}`}>{settings.email}</a></li>
+              {SOCIAL.filter((item) => item.url && item.url.trim() !== '').map((item) => (
+                <li key={item.label}>
+                  <Icon name={item.label.toLowerCase()} size={16} />
+                  <a href={item.url} target="_blank" rel="noopener noreferrer">
+                    {item.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
           <div>
@@ -198,7 +207,7 @@ export default function Landing() {
             </ul>
           </div>
         </div>
-        <div className="container footer-bottom">© {new Date().getFullYear()} {settings.gymName}. {t('footRights')}</div>
+        <div className="container footer-bottom">© {new Date().getFullYear()} {settings.gymName}. {t('footRights')} · {OWNER}</div>
       </footer>
     </div>
   );
