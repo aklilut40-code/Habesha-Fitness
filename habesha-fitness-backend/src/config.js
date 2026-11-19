@@ -29,7 +29,7 @@ export const config = {
   admin: {
     email: env('ADMIN_EMAIL', 'admin@habesha.demo').toLowerCase(),
     password: env('ADMIN_PASSWORD', 'Admin1234'),
-    name: env('ADMIN_NAME', 'Alex Morgan'),
+    name: env('ADMIN_NAME', 'Aklilu Tesfay'),
   },
   sessionDays: 7,
   ai: {
@@ -37,6 +37,8 @@ export const config = {
     key: env('AI_API_KEY'),
     model: env('AI_MODEL', 'gpt-4o-mini'),
     baseUrl: env('AI_BASE_URL'),
+    scope: env('AI_SCOPE', 'general').toLowerCase(),
+    webSearch: env('AI_WEB_SEARCH', 'false').toLowerCase() === 'true',
     perHour: Number(env('AI_RATE_LIMIT_PER_HOUR', '20')),
   },
 };

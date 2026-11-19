@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import { api, setToken, getToken } from '../utils/api';
 
 const SESSION_KEY = 'habesha.demo.session';
-export const DEMO_ADMIN = { email: 'admin@habesha.demo', password: 'Admin1234' };
+export const DEMO_ADMIN = { email: 'admin@habesha.demo', password: 'Admin1234', name: 'Aklilu Tesfay' };
 
 const Ctx = createContext(null);
 
