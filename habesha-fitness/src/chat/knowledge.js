@@ -223,17 +223,35 @@ export function answer(message, { uiLang = 'en', forceLang, getCtx }) {
 }
 
 // ---------- Should an external AI answer this? ----------
-// Used only when the website is connected to the backend (VITE_API_URL). Questions about fitness,
-// nutrition, health and sport go to the AI; questions about the gym itself (prices, hours,
-// registering...) stay with the built-in answers, which are exact and free.
+// Used when the website is connected to the backend. Questions about general topics (news, science,
+// everyday life, unrestricted chat) or fitness/health/nutrition go to the backend AI.
+// Specific questions about the gym (hours, location, registration, login) stay with the built-in FAQ.
 const FIT_LATIN = /\b(protein|diet|diets|calorie|calories|carb|carbs|nutrition|supplement|supplements|creatine|muscle|muscles|bulk|bulking|fat|stretch|stretching|injury|injured|pain|sore|soreness|recovery|recover|sleep|squat|squats|deadlift|bench|cardio|hiit|exercise|exercises|warm up|warmup|reps|sets|abs|healthy|eat|eating|food|meal|meals|breakfast|hydration|water|running|yoga|football|soccer|sport|sports|marathon|vitamin|vitamins|stamina|flexibility|posture|how to lose weight|weight loss|lose weight|gain weight)\b/i;
 const GYM_LATIN = /\b(price|prices|cost|costs|plan|plans|membership|register|registration|sign up|signup|login|log in|password|account|hours|open|opening|close|closing|address|location|where|phone|call|contact|email|trainer|trainers|coach|coaches|program|programs|join|free|trial|pay|payment|dashboard|website|language)\b/i;
 const FIT_GEEZ = ['ፕሮቲን', 'ካሎሪ', 'ምግብ', 'ምግቢ', 'መብላት', 'ምብላዕ', 'ብላዕ', 'ጡንቻ', 'ክብደት', 'ህመም', 'ሕማም', 'ጉዳት', 'ጉድኣት', 'እንቅልፍ', 'ድቃስ', 'ስፖርት', 'ውሃ', 'ቫይታሚን', 'ማሞቅ', 'ዝርጋታ', 'ጤና', 'ጥዕና'];
 const GYM_GEEZ = ['ዋጋ', 'ዕቅድ', 'መደብ', 'አባል', 'ኣባል', 'መመዝገብ', 'ምምዝጋብ', 'መግባት', 'ምእታው', 'የይለፍ', 'ቃል-ምስጢር', 'ሰዓት', 'አድራሻ', 'ኣድራሻ', 'ስልክ', 'ተሌፎን', 'አሰልጣኝ', 'ኣሰልጣኒ', 'ፕሮግራም', 'ነጻ', 'ክፍያ', 'ኣታዊ'];
 
-/** true when the message is a general fitness/health/sport question that is not about the gym itself. */
+// Off-topic words that must go to the unrestricted AI, even if they share words like "price", "plan" or "where"
+const OFF_TOPIC = [
+  'bitcoin', 'crypto', 'stock', 'weather', 'news', 'president',
+  'capital of', 'who is', 'who won', 'world cup', 'programming',
+  'code', 'recipe', 'translate', 'history', 'science', 'math',
+  'homework', 'exchange rate', 'election',
+];
+
+const GYM_OVERRIDE = /\b(gym|membership|trainer|plan|habesha)\b/i;
+
+/** true when the message is off-topic or general fitness/health/sport that should go to the AI assistant. */
 export function wantsAI(message) {
   const text = message.toLowerCase();
+
+  const hasOffTopic = OFF_TOPIC.some((term) =>
+    term.includes(' ') ? text.includes(term) : new RegExp(`\\b${term}`, 'i').test(text)
+  );
+  const hasGymOverride = GYM_OVERRIDE.test(text);
+
+  if (hasOffTopic && !hasGymOverride) return true;
+
   const fit = FIT_LATIN.test(text) || FIT_GEEZ.some((w) => text.includes(w));
   const gym = GYM_LATIN.test(text) || GYM_GEEZ.some((w) => text.includes(w));
   return fit && !gym;
