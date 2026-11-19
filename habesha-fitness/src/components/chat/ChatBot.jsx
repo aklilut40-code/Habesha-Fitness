@@ -7,7 +7,7 @@ import { money } from '../../utils/format';
 import { SUGGESTIONS, answer, fillAnswer, INTENTS, FALLBACK, wantsAI } from '../../chat/knowledge';
 
 // Optional AI backend (see the habesha-fitness-backend folder). Set VITE_API_URL in .env to turn it on, e.g. http://localhost:4000
-const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:4000').replace(/\/$/, '');
 
 // Floating FAQ assistant. Answers in the language the visitor writes in (English, Amharic, Tigrinya).
 export default function ChatBot() {
